@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CourseCard = ({ courseObj }) => {
-  console.log(courseObj, "course");
+
   return (
     <div
       key={courseObj.id}

@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const navigate = useNavigate()
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-     console.log(userInfo._id,"user");
   const handleLogout= async ()=> {
   logoutUser(userInfo._id).then((success) => {
     localStorage.removeItem("userInfo")

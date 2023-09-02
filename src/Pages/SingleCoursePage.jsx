@@ -6,6 +6,7 @@ import UploadForm from "../components/UploadForm/UploadForm";
 import { BACKEND_URI } from "../config/constants";
 import { getVidoes } from "../utils/Api";
 
+
 const SingleCoursePage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { courseName } = useParams();
@@ -25,7 +26,6 @@ const SingleCoursePage = () => {
   const getAllVideos = () => {
     getVidoes(courseName)
       .then((result) => {
-        
         setVideos(result);
       })
       .catch((err) => {
@@ -34,15 +34,13 @@ const SingleCoursePage = () => {
         alert("Error happened");
       });
   };
-  console.log(videos, "videos");
+
   return (
     <>
       <Navbar />
 
       <div className=" flex flex-col justify-center items-center mt-7 px-5">
-      <div className="font-bold p-5 text-xl">
-        {courseName}
-        </div>
+        <div className="font-bold p-5 text-xl">{courseName}</div>
         <div
           id="selectClass"
           onClick={handleOpenModal}
@@ -50,10 +48,13 @@ const SingleCoursePage = () => {
         >
           Add video
         </div>
-      
+
         <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
           <div className=" sm:w-[300px]">
-            <UploadForm handleCloseModal={handleCloseModal} getAllVideos={getAllVideos} />
+            <UploadForm
+              handleCloseModal={handleCloseModal}
+              getAllVideos={getAllVideos}
+            />
             <div className="flex justify-end">
               <button
                 onClick={handleCloseModal}
@@ -67,30 +68,35 @@ const SingleCoursePage = () => {
         </Modal>
       </div>
       <div className="mb-10">
-          {videos.length >0 ? (
-        <div className="carousel grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 p-11 sm:px-16 items-center justify-start  scrollbar-hide gap-6 space-y-5 sm:space-y-0 rounded-xl mr-[5px] ">
-           { videos.map((video) => (
+        {videos.length > 0 ? (
+          <div className="carousel grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 p-11 sm:px-16 items-center justify-start  scrollbar-hide gap-6 space-y-5 sm:space-y-0 rounded-xl mr-[5px] ">
+            {videos.map((video) => (
               <div
-                className={`   card h-[228px] min-w-[250px] lg:w-[400px]    ring-1 rounded-2xl p-5 shadow-lg`}
+                className={`   card h-[258px] min-w-[250px] lg:w-[400px]    ring-1 rounded-2xl p-5 shadow-lg`}
               >
-                {video.videos.map((item) => (
-               <video preload="auto" width="358" controls>
-               <source src={`${BACKEND_URI}${item}`} type="video/mp4" />
-               Your browser does not support the video tag.
-             </video>
+                {video.videos.map((item, index) => (
+                  <>
+                    <video preload="auto"  controls key={index}>
+                      <source
+                        src={`${BACKEND_URI}${item}`}
+                        type="video/mp4"
+                      />
+                      Your browser does not support the video tag.
+                    </video>
+                  </>
                 ))}
 
                 <div className="flex justify-center font-medium text-lg ">
                   <span>{video.title}</span>
-                 
                 </div>
               </div>
             ))}
-        </div>
-          ) : (
-            <div className=" flex justify-center p-10 w-full text-red-500 text-lg"><span>
-              videos not uploaded yet</span></div>
-          )}
+          </div>
+        ) : (
+          <div className=" flex justify-center p-10 w-full text-red-500 text-lg">
+            <span>videos not uploaded yet</span>
+          </div>
+        )}
       </div>
     </>
   );

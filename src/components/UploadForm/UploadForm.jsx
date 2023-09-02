@@ -19,7 +19,7 @@ function UploadForm({getAllVideos,handleCloseModal}) {
      formdata.append('description',description)
      formdata.append('courseName',courseName)
      uploadVideos(formdata).then((success) =>{
-      message.success("Images uploaded successfully")
+      message.success("Videos uploaded successfully")
       getAllVideos()
         handleCloseModal()
      } ).catch((err)=> {
