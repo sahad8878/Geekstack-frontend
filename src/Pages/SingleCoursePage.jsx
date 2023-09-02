@@ -70,12 +70,13 @@ const SingleCoursePage = () => {
       <div className="mb-10">
         {videos.length > 0 ? (
           <div className="carousel grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 p-11 sm:px-16 items-center justify-start  scrollbar-hide gap-6 space-y-5 sm:space-y-0 rounded-xl mr-[5px] ">
-            {videos.map((video) => (
+            {videos.map((video,index) => (
               <div
+              key={index}
                 className={`   card h-[258px] min-w-[250px] lg:w-[400px]    ring-1 rounded-2xl p-5 shadow-lg`}
               >
                   <>
-                    <video preload="auto"  controls>
+                    <video preload="auto"  className="h-[208px] min-w-[250px] w-full lg:w-[400px] "  controls>
                       <source
                         src={video.videos}
                         type="video/mp4"
