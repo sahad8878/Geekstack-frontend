@@ -19,8 +19,9 @@ const handleLoadMore = () => {
   <Navbar/>
     <div className="mb-10">
       <div className="carousel grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 p-11 sm:px-16 items-center justify-start  scrollbar-hide gap-6 space-y-5 sm:space-y-0 rounded-xl mr-[5px] ">
-        {visibleFilteredCourse.map((courseObj) => (
+        {visibleFilteredCourse.map((courseObj,index) => (
           <CourseCard
+          key={index}
           courseObj={courseObj}
           />
         ))}

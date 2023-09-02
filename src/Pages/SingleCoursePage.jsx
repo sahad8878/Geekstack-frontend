@@ -74,18 +74,16 @@ const SingleCoursePage = () => {
               <div
                 className={`   card h-[258px] min-w-[250px] lg:w-[400px]    ring-1 rounded-2xl p-5 shadow-lg`}
               >
-                {video.videos.map((item, index) => (
                   <>
-                    <video preload="auto"  controls key={index}>
+                    <video preload="auto"  controls>
                       <source
-                        src={`${BACKEND_URI}${item}`}
+                        src={video.videos}
                         type="video/mp4"
                       />
                       Your browser does not support the video tag.
                     </video>
                   </>
-                ))}
-
+    
                 <div className="flex justify-center font-medium text-lg ">
                   <span>{video.title}</span>
                 </div>
