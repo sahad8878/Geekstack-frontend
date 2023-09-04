@@ -20,6 +20,18 @@ export const registerUser = async (postData) => {
     return response.data;
   };
 
+
+  export const googleLogin = async (postData) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await axios.post("/api/user/googleLogin", postData, config);
+
+    return response.data;
+  }
+
   export const uploadVideos = async (postData)=> {
   
     const response = await axios.post("/api/videos/upload", postData);
@@ -27,10 +39,13 @@ export const registerUser = async (postData) => {
   }
 
   export const getVidoes = async (params)=> {
-   
+ 
+ 
     const response = await axios.get(`/api/videos/getAll?courseName=${params}`);
     return response.data;
   }
+
+
 
   export const logoutUser = async (params)=> {
    

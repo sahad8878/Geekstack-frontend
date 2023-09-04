@@ -2,7 +2,10 @@ import React, { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
-import {loginUser,registerUser} from '../../utils/Api'
+import { GoogleLogin } from "@react-oauth/google";
+import jwtDecode from "jwt-decode";
+
+import {googleLogin, loginUser,registerUser} from '../../utils/Api'
 
 function Auth({ tab,setTab }) {
   const [show, setShow] = useState(false);
@@ -68,6 +71,30 @@ function Auth({ tab,setTab }) {
     setLoading(false);
   
   };
+  const handelGoogleSignIn = async (response) => {
+    const decoded = jwtDecode(response.credential);
+
+    const { email, family_name, given_name } = decoded;
+  const data ={
+      email: email,
+      username: `${given_name} ${family_name}`,
+    }
+    try {
+      const res = await googleLogin(data)
+         if(res.success){
+
+           message.success("Your successfully logged in");
+           localStorage.setItem("userInfo", JSON.stringify(res));
+           navigate("/home");
+         }else {
+          message.error(res.message);
+         }
+    } catch (error) {
+      console.log("google login:",error);
+      message.error("Failed to google login",);
+      return;
+    }
+  };
 
   return (
     <form className="my-8 space-y-3">
@@ -125,6 +152,10 @@ function Auth({ tab,setTab }) {
           </div>
         </div>
       )}
+   
+      <div>
+
+      </div>
   
       <div>
         <button
@@ -136,6 +167,24 @@ function Auth({ tab,setTab }) {
           {loading ? "Loading.. " : tab === "login" ? "Login" : "Signup"}
         </button>
       </div>
+      {
+        tab === "login" &&
+        <div className="flex flex-col items-center space-y-3 justify-center">
+          <span>OR</span>
+          <div>
+          <GoogleLogin
+          size="large"
+          onSuccess={(response) => {
+            handelGoogleSignIn(response);
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
+          </div>
+          
+        </div>
+      }
     </form>
   );
 }

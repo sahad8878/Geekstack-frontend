@@ -3,14 +3,12 @@ import Navbar from "../components/Navbar/Navbar";
 import { useParams } from "react-router-dom";
 import Modal from "../components/Modal/Modal";
 import UploadForm from "../components/UploadForm/UploadForm";
-import { BACKEND_URI } from "../config/constants";
 import { getVidoes } from "../utils/Api";
 
 
 const SingleCoursePage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { courseName } = useParams();
-
   const handleOpenModal = () => {
     setModalOpen(true);
   };
